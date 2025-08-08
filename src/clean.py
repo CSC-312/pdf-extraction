@@ -1,12 +1,17 @@
 # %%
 import sys
-from loguru import logger
 import pandas as pd
+from pathlib import Path
+
+# Add the project root to the Python path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
+from utils.logger import get_logger
+
+logger = get_logger()
 
 # %%
-logger.remove()
-
-logger.add(sink=sys.stdout, format="<green>{level}</green>: {message}")
 # %%
 df = pd.read_csv("data/UWC Website and PDF Data - Data.csv")
 
