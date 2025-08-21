@@ -6,13 +6,16 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "loguru>=0.7.3",
+    "openpyxl>=3.1.5",
     "pandas>=2.3.1",
     "pdfminer-six[image]>=20250506",
+    "pyarrow>=21.0.0",
 ]
 
 [dependency-groups]
 dev = [
     "ipykernel>=6.30.0",
+    "pyrefly>=0.28.1",
     "ruff>=0.12.7",
- "ty>=0.0.1a16",
+    "ty>=0.0.1a16",
 ]
