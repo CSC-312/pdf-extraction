@@ -1,2 +1,4 @@
 data/pdfs.csv
 pdfs.csv
+*.csv
+*.xlsx
