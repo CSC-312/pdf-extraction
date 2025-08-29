@@ -15,16 +15,17 @@ logger = get_logger()
 
 
 pdfs = os.listdir("output")
+logger.info(f"Extracting text from {len(pdfs)} PDFs...")
+if os.path.exists("extracted"):
+    pass
+else:
+    os.mkdir("extracted")
 
-logger.info(f"All pdfs {pdfs}")
+csv_file = os.path.join("extracted", "extracted.csv")
 
-csv_file = os.path.join("output", "extracted.csv")
-
-# Open CSV once and write all rows
 with open(csv_file, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
-    # Write header row
-    writer.writerow(["Name", "Text"])
+    writer.writerow(["url", "text"])
 
     for pdf in pdfs:
         if pdf.endswith(".pdf"):
@@ -34,6 +35,3 @@ with open(csv_file, "w", newline="", encoding="utf-8") as f:
                 logger.info(f"Extracted text from {pdf} successfully.")
             except Exception as e:
                 logger.error(f"Failed to extract text from {pdf}: {e}")
-
-
-
