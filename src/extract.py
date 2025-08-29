@@ -1,3 +1,4 @@
+import csv
 import os
 import sys
 from pathlib import Path
@@ -13,10 +14,24 @@ from utils.logger import get_logger
 logger = get_logger()
 
 
-pdf = os.listdir("output/")[4]
+pdfs = os.listdir("output")
+logger.info(f"Extracting text from {len(pdfs)} PDFs...")
+if os.path.exists("extracted"):
+    pass
+else:
+    os.mkdir("extracted")
 
-logger.info(f"Extracting text from {pdf}")
+csv_file = os.path.join("extracted", "extracted.csv")
 
-text = extract_text(f"output/{pdf}")
+with open(csv_file, "w", newline="", encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerow(["url", "text"])
 
-logger.info(text)
+    for pdf in pdfs:
+        if pdf.endswith(".pdf"):
+            try:
+                text = extract_text(os.path.join("output", pdf))
+                writer.writerow([pdf, text])
+                logger.info(f"Extracted text from {pdf} successfully.")
+            except Exception as e:
+                logger.error(f"Failed to extract text from {pdf}: {e}")
