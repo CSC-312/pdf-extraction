@@ -1,3 +1,4 @@
+import csv
 import os
 import sys
 from pathlib import Path
@@ -13,10 +14,26 @@ from utils.logger import get_logger
 logger = get_logger()
 
 
-pdf = os.listdir("output/")[4]
+pdfs = os.listdir("output")
 
-logger.info(f"Extracting text from {pdf}")
+logger.info(f"All pdfs {pdfs}")
 
-text = extract_text(f"output/{pdf}")
+csv_file = os.path.join("output", "pdf_texts.csv")
 
-logger.info(text)
+# Open CSV once and write all rows
+with open(csv_file, "w", newline="", encoding="utf-8") as f:
+    writer = csv.writer(f)
+    # Write header row
+    writer.writerow(["Name", "Text"])
+
+    for pdf in pdfs:
+        if pdf.endswith(".pdf"):
+            try:
+                text = extract_text(os.path.join("output", pdf))
+                writer.writerow([pdf, text])
+                logger.info(f"Extracted text from {pdf} successfully.")
+            except Exception as e:
+                logger.error(f"Failed to extract text from {pdf}: {e}")
+
+
+
