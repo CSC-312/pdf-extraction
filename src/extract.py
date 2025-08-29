@@ -18,7 +18,7 @@ pdfs = os.listdir("output")
 
 logger.info(f"All pdfs {pdfs}")
 
-csv_file = os.path.join("output", "pdf_texts.csv")
+csv_file = os.path.join("output", "extracted.csv")
 
 # Open CSV once and write all rows
 with open(csv_file, "w", newline="", encoding="utf-8") as f:
